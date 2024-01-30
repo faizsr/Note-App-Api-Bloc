@@ -19,9 +19,9 @@ class CustomSearchField extends StatelessWidget {
         placeholder: 'Search note...',
         placeholderStyle: const TextStyle(
           color: Color(0xFFc1c3c8),
-          letterSpacing: 0.8,
+          letterSpacing: 0.6,
           fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
         ),
         prefixIcon: SizedBox(
           width: 16,
