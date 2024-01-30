@@ -3,51 +3,77 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/core/colors.dart';
 import 'package:note_app/core/constants.dart';
 import 'package:note_app/presentation/screens/add_note/cubit/checkbox_cubit.dart';
-import 'package:note_app/presentation/screens/add_note/widgets/add_custom_appbar.dart';
 import 'package:note_app/presentation/screens/add_note/widgets/add_date_status_widget.dart';
 import 'package:note_app/presentation/screens/add_note/widgets/add_textfield.dart';
 
-class AddNotePage extends StatefulWidget {
-  const AddNotePage({super.key});
+class DetailPage extends StatefulWidget {
+  const DetailPage({super.key});
 
   @override
-  State<AddNotePage> createState() => _AddNotePageState();
+  State<DetailPage> createState() => _DetailPageState();
 }
 
-class _AddNotePageState extends State<AddNotePage> {
-  late CheckBoxCubit checkBoxBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    checkBoxBloc = BlocProvider.of<CheckBoxCubit>(context);
-    checkBoxBloc.resetChecked();
-  }
-
+class _DetailPageState extends State<DetailPage> {
+  bool enableSaveBtn = false;
   @override
   Widget build(BuildContext context) {
+    final checkboxBloc = BlocProvider.of<CheckBoxCubit>(context);
+
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AddCustomAppbar(),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 25, 10, 15),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(Icons.arrow_back_ios, size: 20),
+                      ),
+                    ),
+                    const Text(
+                      'Your note',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.more_vert_sharp,
+                      size: 22,
+                    )
+                  ],
+                ),
+              ),
+              const Divider(
+                height: 0,
+              ),
+            ],
+          ),
         ),
         body: Column(
           children: [
-            const Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const AddCustomTextField(
+                    AddCustomTextField(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       hintText: 'Title',
+                      onChanged: (value) {
+                        setState(() {
+                          enableSaveBtn = true;
+                        });
+                      },
                     ),
                     kHeight(20),
-                    AddDateAndStatusWidget(checkboxBloc: checkBoxBloc),
+                    AddDateAndStatusWidget(checkboxBloc: checkboxBloc),
                     const Divider(),
                     const AddCustomTextField(
                       hintText: 'Write your notes here...',
@@ -60,12 +86,13 @@ class _AddNotePageState extends State<AddNotePage> {
             ),
           ],
         ),
-        floatingActionButton: _customCreateBtn(context),
+        floatingActionButton:
+            enableSaveBtn ? _customSaveBtn(context) : const SizedBox(),
       ),
     );
   }
 
-  Visibility _customCreateBtn(BuildContext context) {
+  Visibility _customSaveBtn(BuildContext context) {
     return Visibility(
       visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
       child: MaterialButton(
@@ -74,7 +101,7 @@ class _AddNotePageState extends State<AddNotePage> {
         color: kBlue,
         onPressed: () {},
         child: const Text(
-          'Create',
+          'Save',
           style: TextStyle(
             color: Colors.white,
             fontSize: 15,

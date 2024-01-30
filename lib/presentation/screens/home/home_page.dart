@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/core/colors.dart';
 import 'package:note_app/presentation/screens/add_note/add_note_page.dart';
+import 'package:note_app/presentation/screens/detail/detail_page.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_card_widget.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_custom_appbar.dart';
 
@@ -9,7 +10,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -23,8 +23,17 @@ class HomePage extends StatelessWidget {
             crossAxisCount: 2,
           ),
           itemBuilder: (context, index) {
-            return const HomeCardWidget(
-              text: 'How to write thanks you note',
+            return InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DetailPage(),
+                  ),
+                );
+              },
+              child: const HomeCardWidget(
+                text: 'How to write thanks you note',
+              ),
             );
           },
         ),

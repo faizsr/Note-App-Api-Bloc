@@ -6,4 +6,8 @@ class CheckBoxCubit extends Cubit<bool> {
   void isChecked() {
     emit(!state);
   }
+
+  void resetChecked() {
+    emit(false);
+  }
 }

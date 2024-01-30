@@ -6,11 +6,13 @@ class AddCustomTextField extends StatelessWidget {
     required this.hintText,
     required this.fontSize,
     required this.fontWeight,
+    this.onChanged,
   });
 
   final String hintText;
   final double fontSize;
   final FontWeight fontWeight;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class AddCustomTextField extends StatelessWidget {
         ),
         border: InputBorder.none,
       ),
+      onChanged: onChanged,
     );
   }
 }
