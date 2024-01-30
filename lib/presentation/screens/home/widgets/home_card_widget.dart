@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/core/colors.dart';
 import 'package:note_app/core/constants.dart';
 
 class HomeCardWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class HomeCardWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color(0xFFeff2f9),
+        color: kShadedWhite,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -36,7 +37,7 @@ class HomeCardWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 10,
-              color: Color(0xFFbfc0c8),
+              color: kTextLightGrey,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -48,7 +49,7 @@ class HomeCardWidget extends StatelessWidget {
                 '10:00 PM | 24 Sep',
                 style: TextStyle(
                   fontSize: 10,
-                  color: Color(0xFFbfc0c8),
+                  color: kTextLightGrey,
                 ),
               ),
               Align(

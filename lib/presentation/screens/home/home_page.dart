@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/core/colors.dart';
+import 'package:note_app/presentation/screens/add_note/add_note_page.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_card_widget.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_custom_appbar.dart';
 
@@ -7,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -25,15 +28,19 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
-        floatingActionButton: _addButton(),
+        floatingActionButton: _addButton(context),
       ),
     );
   }
 
-  FloatingActionButton _addButton() {
+  FloatingActionButton _addButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
-      backgroundColor: const Color(0xFF3757f8),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AddNotePage(),
+        ));
+      },
+      backgroundColor: kBlue,
       shape: const CircleBorder(),
       elevation: 0,
       child: const Icon(

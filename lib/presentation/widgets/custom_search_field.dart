@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/core/assets.dart';
+import 'package:note_app/core/colors.dart';
 
 class CustomSearchField extends StatelessWidget {
   const CustomSearchField({
@@ -12,13 +13,13 @@ class CustomSearchField extends StatelessWidget {
     return SizedBox(
       height: 60,
       child: CupertinoSearchTextField(
-        backgroundColor: const Color(0xFFeff2f9),
+        backgroundColor: kShadedWhite,
         borderRadius: BorderRadius.circular(15),
         prefixInsets: const EdgeInsetsDirectional.only(start: 14),
         suffixInsets: const EdgeInsetsDirectional.only(end: 10),
         placeholder: 'Search note...',
         placeholderStyle: const TextStyle(
-          color: Color(0xFFc1c3c8),
+          color: kTextLightGrey,
           letterSpacing: 0.6,
           fontSize: 14,
           fontWeight: FontWeight.w400,
