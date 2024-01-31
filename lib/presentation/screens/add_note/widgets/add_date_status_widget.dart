@@ -6,10 +6,10 @@ import 'package:note_app/presentation/screens/add_note/cubit/checkbox_cubit.dart
 class AddDateAndStatusWidget extends StatelessWidget {
   const AddDateAndStatusWidget({
     super.key,
-    required this.checkboxBloc,
+    required this.checkboxCubit,
   });
 
-  final CheckBoxCubit checkboxBloc;
+  final CheckBoxCubit checkboxCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class AddDateAndStatusWidget extends StatelessWidget {
                   child: Checkbox(
                     value: state,
                     onChanged: (bool? value) {
-                      checkboxBloc.isChecked();
+                      checkboxCubit.isChecked();
                     },
                   ),
                 );

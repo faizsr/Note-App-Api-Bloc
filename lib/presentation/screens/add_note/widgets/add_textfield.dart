@@ -7,22 +7,32 @@ class AddCustomTextField extends StatelessWidget {
     required this.fontSize,
     required this.fontWeight,
     this.onChanged,
+    this.controller,
   });
 
   final String hintText;
   final double fontSize;
   final FontWeight fontWeight;
   final void Function(String)? onChanged;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       maxLines: null,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),
       decoration: InputDecoration(
+        errorMaxLines: 1,
+        errorText: '',
+        errorStyle: const TextStyle(
+          height: 0,
+          fontSize: 0,
+          color: Colors.transparent,
+        ),
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: fontSize,
@@ -31,6 +41,12 @@ class AddCustomTextField extends StatelessWidget {
         border: InputBorder.none,
       ),
       onChanged: onChanged,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return '';
+        }
+        return null;
+      },
     );
   }
 }

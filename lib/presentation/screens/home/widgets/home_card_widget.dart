@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:note_app/core/colors.dart';
 import 'package:note_app/core/constants.dart';
+import 'package:note_app/data/models/note_model.dart';
 
 class HomeCardWidget extends StatelessWidget {
   const HomeCardWidget({
     super.key,
-    required this.text,
+    required this.notes,
   });
 
-  final String text;
+  final NoteModel notes;
 
   @override
   Widget build(BuildContext context) {
+    DateTime inputDateTime = DateTime.parse(notes.createdAt!);
+
+    String formattedDateTime =
+        DateFormat('hh:mm a | dd MMM').format(inputDateTime);
+
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(15),
@@ -20,9 +27,10 @@ class HomeCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            text,
+            notes.title,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -31,23 +39,23 @@ class HomeCardWidget extends StatelessWidget {
             ),
           ),
           kHeight(14),
-          const Text(
-            'Generatae lorem Ipsum placeholder text select the number of .',
+          Text(
+            notes.description,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 10,
               color: kTextLightGrey,
               fontWeight: FontWeight.w600,
             ),
           ),
           const Spacer(),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '10:00 PM | 24 Sep',
-                style: TextStyle(
+                formattedDateTime,
+                style: const TextStyle(
                   fontSize: 10,
                   color: kTextLightGrey,
                 ),
@@ -56,7 +64,8 @@ class HomeCardWidget extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CircleAvatar(
                   radius: 6,
-                  backgroundColor: Colors.purpleAccent,
+                  backgroundColor:
+                      notes.isCompleted ? Colors.purpleAccent : Colors.green,
                 ),
               ),
             ],

@@ -17,13 +17,13 @@ class _DetailPageState extends State<DetailPage> {
   bool enableSaveBtn = false;
   @override
   Widget build(BuildContext context) {
-    final checkboxBloc = BlocProvider.of<CheckBoxCubit>(context);
+    final checkboxCubit = BlocProvider.of<CheckBoxCubit>(context);
 
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80),
+          preferredSize: const Size.fromHeight(100),
           child: Column(
             children: [
               Padding(
@@ -42,9 +42,27 @@ class _DetailPageState extends State<DetailPage> {
                       style: TextStyle(fontSize: 17),
                     ),
                     const Spacer(),
-                    const Icon(
-                      Icons.more_vert_sharp,
-                      size: 22,
+                    PopupMenuButton(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      color: kBlue,
+                      child: const Icon(
+                        Icons.more_vert_sharp,
+                        size: 22,
+                      ),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          height: 25,
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -73,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
                       },
                     ),
                     kHeight(20),
-                    AddDateAndStatusWidget(checkboxBloc: checkboxBloc),
+                    AddDateAndStatusWidget(checkboxCubit: checkboxCubit),
                     const Divider(),
                     const AddCustomTextField(
                       hintText: 'Write your notes here...',

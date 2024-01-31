@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/bloc/note_bloc.dart';
 import 'package:note_app/core/themes/light_theme.dart';
 import 'package:note_app/presentation/screens/add_note/cubit/checkbox_cubit.dart';
 import 'package:note_app/presentation/screens/home/home_page.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CheckBoxCubit()),
+        BlocProvider(create: (context) => NoteBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
