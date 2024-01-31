@@ -7,7 +7,7 @@ import 'package:note_app/data/models/note_model.dart';
 const String baseUrl = 'https://api.nstack.in/v1/todos';
 
 class NoteRepo {
-  static Future<List<NoteModel>> fetchNotes({String? query}) async {
+  static Future<List<NoteModel>> fetchNotes() async {
     var client = http.Client();
     List<NoteModel> notes = [];
 
@@ -22,39 +22,12 @@ class NoteRepo {
           notes.add(note);
         }
       }
-      return query == ''
-          ? notes
-          : notes
-              .where((note) =>
-                  note.title.toLowerCase().contains(query!.toLowerCase()))
-              .toList();
+      return notes;
     } catch (e) {
       debugPrint(e.toString());
       return [];
     }
   }
-
-  // static Future<List<NoteModel>> searchNotes(String query) async {
-  //   var client = http.Client();
-  //   List<NoteModel> notes = [];
-
-  //   try {
-  //     var response = await client.get(Uri.parse(baseUrl));
-  //     if (response.statusCode == 200) {
-  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
-  //       final List items = responseData['items'];
-  //       for (int i = 0; i < items.length; i++) {
-  //         NoteModel note = NoteModel.fromJson(items[i] as Map<String, dynamic>);
-
-  //         notes.add(note);
-  //       }
-  //     }
-  //     return notes.where((element) => element.title.toLowerCase().contains(query.toLowerCase())).toList();
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     return [];
-  //   }
-  // }
 
   static Future<bool> addNote({required NoteModel note}) async {
     var client = http.Client();

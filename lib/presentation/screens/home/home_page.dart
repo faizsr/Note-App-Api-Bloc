@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    noteBloc.add(NoteInitialFetchEvent(query: ''));
+    noteBloc.add(NoteInitialFetchEvent());
     super.initState();
   }
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               case NoteFetchingSuccessState:
                 final successState = state as NoteFetchingSuccessState;
                 return GridView.builder(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),

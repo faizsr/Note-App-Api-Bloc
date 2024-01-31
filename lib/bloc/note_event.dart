@@ -3,13 +3,7 @@ part of 'note_bloc.dart';
 @immutable
 sealed class NoteEvent {}
 
-class NoteInitialFetchEvent extends NoteEvent {
-  final String query;
-
-  NoteInitialFetchEvent({
-    required this.query,
-  });
-}
+class NoteInitialFetchEvent extends NoteEvent {}
 
 class NoteAddEvent extends NoteEvent {
   final NoteModel note;

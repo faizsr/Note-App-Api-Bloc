@@ -19,8 +19,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   FutureOr<void> noteInitialFetchEvent(
       NoteInitialFetchEvent event, Emitter<NoteState> emit) async {
     emit(NoteFetchingLoadingState());
-    List<NoteModel> notes = await NoteRepo.fetchNotes(query: event.query);
-    // print(notes.length);
+    List<NoteModel> notes = await NoteRepo.fetchNotes();
     emit(NoteFetchingSuccessState(notes: notes));
   }
 
