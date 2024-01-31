@@ -83,25 +83,21 @@ class HomePage extends StatelessWidget {
             }
           },
         ),
-        floatingActionButton: _addButton(context, noteBloc),
-      ),
-    );
-  }
-
-  Visibility _addButton(BuildContext context, NoteBloc noteBloc) {
-    return Visibility(
-      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-      child: FloatingActionButton(
-        onPressed: () {
-          nextScreen(context, AddNotePage(noteBloc: noteBloc));
-        },
-        backgroundColor: kBlue,
-        shape: const CircleBorder(),
-        elevation: 0,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 30,
+        floatingActionButton: Visibility(
+          visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+          child: FloatingActionButton(
+            onPressed: () {
+              nextScreen(context, AddNotePage(noteBloc: noteBloc));
+            },
+            backgroundColor: kBlue,
+            shape: const CircleBorder(),
+            elevation: 0,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
         ),
       ),
     );
