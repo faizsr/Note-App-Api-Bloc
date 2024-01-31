@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/bloc/note_bloc.dart';
 import 'package:note_app/core/assets.dart';
 import 'package:note_app/core/colors.dart';
 
@@ -41,7 +43,9 @@ class CustomSearchField extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
-        onChanged: (value) {},
+        onChanged: (value) {
+          context.read<NoteBloc>().add(NoteInitialFetchEvent(query: value));
+        },
       ),
     );
   }

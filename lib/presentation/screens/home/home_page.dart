@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    noteBloc.add(NoteInitialFetchEvent());
+    noteBloc.add(NoteInitialFetchEvent(query: ''));
     super.initState();
   }
 
