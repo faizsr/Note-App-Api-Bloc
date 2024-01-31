@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(180),
+          preferredSize: Size.fromHeight(90),
           child: CustomAppbar(),
         ),
         body: BlocConsumer<NoteBloc, NoteState>(
@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
             switch (state.runtimeType) {
               case NoteFetchingLoadingState:
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: kBlue,
+                  ),
                 );
 
               case NoteFetchingSuccessState:

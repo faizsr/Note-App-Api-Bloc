@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/core/colors.dart';
-import 'package:note_app/presentation/widgets/custom_search_field.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({
@@ -15,7 +14,7 @@ class CustomAppbar extends StatelessWidget {
       child: const Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,7 +33,6 @@ class CustomAppbar extends StatelessWidget {
               ],
             ),
           ),
-          CustomSearchField(),
         ],
       ),
     );
