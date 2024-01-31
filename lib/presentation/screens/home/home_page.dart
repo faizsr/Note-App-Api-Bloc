@@ -8,24 +8,15 @@ import 'package:note_app/presentation/screens/detail/detail_page.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_card_widget.dart';
 import 'package:note_app/presentation/screens/home/widgets/home_custom_appbar.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final NoteBloc noteBloc = NoteBloc();
-
-  @override
-  void initState() {
-    noteBloc.add(NoteInitialFetchEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final noteBloc = context.read<NoteBloc>();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      context.read<NoteBloc>().add(NoteInitialFetchEvent());
+    });
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -34,7 +25,6 @@ class _HomePageState extends State<HomePage> {
           child: CustomAppbar(),
         ),
         body: BlocConsumer<NoteBloc, NoteState>(
-          bloc: noteBloc,
           listenWhen: (previous, current) => current is NoteActionState,
           buildWhen: (previous, current) => current is! NoteActionState,
           listener: (context, state) {
@@ -56,29 +46,34 @@ class _HomePageState extends State<HomePage> {
 
               case NoteFetchingSuccessState:
                 final successState = state as NoteFetchingSuccessState;
-                return GridView.builder(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: successState.notes.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        nextScreen(
-                          context,
-                          DetailPage(
-                            notes: successState.notes[index],
-                            noteBloc: noteBloc,
-                          ),
-                        );
-                      },
-                      child: HomeCardWidget(
-                        notes: successState.notes[index],
-                      ),
-                    );
-                  },
-                );
+                return successState.notes.isNotEmpty
+                    ? GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: successState.notes.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              nextScreen(
+                                context,
+                                DetailPage(
+                                  notes: successState.notes[index],
+                                  noteBloc: noteBloc,
+                                ),
+                              );
+                            },
+                            child: HomeCardWidget(
+                              notes: successState.notes[index],
+                            ),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text('No notes found!!'),
+                      );
               default:
                 return const SizedBox(
                   child: Center(
@@ -93,18 +88,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  FloatingActionButton _addButton(BuildContext context, NoteBloc noteBloc) {
-    return FloatingActionButton(
-      onPressed: () {
-        nextScreen(context, AddNotePage(noteBloc: noteBloc));
-      },
-      backgroundColor: kBlue,
-      shape: const CircleBorder(),
-      elevation: 0,
-      child: const Icon(
-        Icons.add,
-        color: Colors.white,
-        size: 30,
+  Visibility _addButton(BuildContext context, NoteBloc noteBloc) {
+    return Visibility(
+      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+      child: FloatingActionButton(
+        onPressed: () {
+          nextScreen(context, AddNotePage(noteBloc: noteBloc));
+        },
+        backgroundColor: kBlue,
+        shape: const CircleBorder(),
+        elevation: 0,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
       ),
     );
   }
