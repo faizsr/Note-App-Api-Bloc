@@ -49,4 +49,46 @@ class NoteRepo {
       return false;
     }
   }
+
+  static Future<bool> updateNote({required NoteModel note}) async {
+    var client = http.Client();
+    try {
+      String url = "$baseUrl/${note.id}";
+      debugPrint(url);
+      var response = await client.put(
+        Uri.parse(url),
+        body: jsonEncode(note),
+        headers: {'Content-Type': 'application/json'},
+      );
+      debugPrint('status code: ${response.statusCode}');
+      debugPrint(response.body);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> deleteNote({required String noteId}) async {
+    var client = http.Client();
+    try {
+      String url = "$baseUrl/$noteId";
+      debugPrint(url);
+      var response = await client.delete(Uri.parse(url));
+      debugPrint('status code: ${response.statusCode}');
+      debugPrint(response.body);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

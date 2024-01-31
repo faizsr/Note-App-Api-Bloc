@@ -19,5 +19,9 @@ class NoteFetchingSuccessState extends NoteState {
 class NoteFetchingErrorState extends NoteState {}
 
 class NoteAddSuccessActionState extends NoteActionState {}
+class NoteUpdateSuccessActionState extends NoteActionState {}
+class NoteDeleteSuccessActionState extends NoteActionState {}
 
 class NoteAddErrorActionState extends NoteActionState {}
+class NoteUpdateErrorActionState extends NoteActionState {}
+class NoteDeleteErrorActionState extends NoteActionState {}

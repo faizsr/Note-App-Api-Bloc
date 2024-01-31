@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:note_app/bloc/note_bloc.dart';
 import 'package:note_app/core/colors.dart';
 import 'package:note_app/core/constants.dart';
 import 'package:note_app/data/models/note_model.dart';
 import 'package:note_app/presentation/screens/add_note/cubit/checkbox_cubit.dart';
 import 'package:note_app/presentation/screens/add_note/widgets/add_custom_appbar.dart';
-import 'package:note_app/presentation/screens/add_note/widgets/add_date_status_widget.dart';
+import 'package:note_app/presentation/screens/add_note/widgets/add_date_and_status_widget.dart';
 import 'package:note_app/presentation/screens/add_note/widgets/add_textfield.dart';
 
 class AddNotePage extends StatefulWidget {
@@ -26,11 +27,16 @@ class _AddNotePageState extends State<AddNotePage> {
   final descriptionController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  DateTime inputDateTime = DateTime.parse(DateTime.now().toString());
+  late String formattedDateTime;
+
   @override
   void initState() {
     super.initState();
     checkBoxBloc = BlocProvider.of<CheckBoxCubit>(context);
     checkBoxBloc.resetChecked();
+    formattedDateTime =
+        DateFormat('hh:mm a | dd MMM yyyy').format(inputDateTime);
   }
 
   @override
@@ -59,7 +65,10 @@ class _AddNotePageState extends State<AddNotePage> {
                         hintText: 'Title',
                       ),
                       kHeight(20),
-                      AddDateAndStatusWidget(checkboxCubit: checkBoxBloc),
+                      AddDateAndStatusWidget(
+                        checkboxCubit: checkBoxBloc,
+                        dateAndTime: formattedDateTime,
+                      ),
                       const Divider(),
                       AddCustomTextField(
                         controller: descriptionController,
@@ -78,7 +87,6 @@ class _AddNotePageState extends State<AddNotePage> {
           context: context,
           title: titleController.text,
           description: descriptionController.text,
-          isCompleted: false,
           noteBloc: widget.noteBloc,
           formKey: formKey,
         ),
@@ -90,22 +98,22 @@ class _AddNotePageState extends State<AddNotePage> {
     required BuildContext context,
     required String title,
     required String description,
-    required bool isCompleted,
     required NoteBloc noteBloc,
     required GlobalKey<FormState> formKey,
   }) {
     return Visibility(
-      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+      visible: MediaQuery.of(context).viewInsets.bottom == .0,
       child: MaterialButton(
         minWidth: double.infinity,
         height: 50,
         color: kBlue,
         onPressed: () {
+          debugPrint('${context.read<CheckBoxCubit>().state}');
           if (formKey.currentState!.validate()) {
             final newNote = NoteModel(
               title: title,
               description: description,
-              isCompleted: isCompleted,
+              isCompleted: context.read<CheckBoxCubit>().state,
             );
             noteBloc.add(NoteAddEvent(note: newNote));
           } else {

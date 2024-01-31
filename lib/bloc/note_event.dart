@@ -12,3 +12,19 @@ class NoteAddEvent extends NoteEvent {
     required this.note,
   });
 }
+
+class NoteUpdateEvent extends NoteEvent {
+  final NoteModel note;
+
+  NoteUpdateEvent({
+    required this.note,
+  });
+}
+
+class NoteDeleteEvent extends NoteEvent {
+  final String noteId;
+
+  NoteDeleteEvent({
+    required this.noteId,
+  });
+}

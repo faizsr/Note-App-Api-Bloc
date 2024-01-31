@@ -63,7 +63,13 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        nextScreen(context, const DetailPage());
+                        nextScreen(
+                          context,
+                          DetailPage(
+                            notes: successState.notes[index],
+                            noteBloc: noteBloc,
+                          ),
+                        );
                       },
                       child: HomeCardWidget(
                         notes: successState.notes[index],

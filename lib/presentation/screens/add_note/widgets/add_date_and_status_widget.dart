@@ -7,9 +7,13 @@ class AddDateAndStatusWidget extends StatelessWidget {
   const AddDateAndStatusWidget({
     super.key,
     required this.checkboxCubit,
+    this.dateAndTime,
+    this.isCompleted,
   });
 
   final CheckBoxCubit checkboxCubit;
+  final String? dateAndTime;
+  final bool? isCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class AddDateAndStatusWidget extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              '${DateTime.now()}',
+              dateAndTime ?? '${DateTime.now()}',
               style: const TextStyle(fontSize: 13),
             )
           ],

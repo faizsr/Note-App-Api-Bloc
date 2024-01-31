@@ -12,6 +12,8 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   NoteBloc() : super(NoteInitial()) {
     on<NoteInitialFetchEvent>(noteInitialFetchEvent);
     on<NoteAddEvent>(noteAddEvent);
+    on<NoteUpdateEvent>(noteUpdateEvent);
+    on<NoteDeleteEvent>(noteDeleteEvent);
   }
 
   FutureOr<void> noteInitialFetchEvent(
@@ -24,11 +26,32 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   FutureOr<void> noteAddEvent(
       NoteAddEvent event, Emitter<NoteState> emit) async {
     bool success = await NoteRepo.addNote(note: event.note);
-    print(success);
+    debugPrint('$success');
     if (success) {
       emit(NoteAddSuccessActionState());
     } else {
       emit(NoteAddErrorActionState());
+    }
+  }
+
+  FutureOr<void> noteUpdateEvent(
+      NoteUpdateEvent event, Emitter<NoteState> emit) async {
+    bool success = await NoteRepo.updateNote(note: event.note);
+    debugPrint('$success');
+    if (success) {
+      emit(NoteUpdateSuccessActionState());
+    } else {
+      emit(NoteUpdateErrorActionState());
+    }
+  }
+
+  FutureOr<void> noteDeleteEvent(
+      NoteDeleteEvent event, Emitter<NoteState> emit) async {
+    bool sucess = await NoteRepo.deleteNote(noteId: event.noteId);
+    if (sucess) {
+      emit(NoteDeleteSuccessActionState());
+    } else {
+      emit(NoteDeleteErrorActionState());
     }
   }
 }
