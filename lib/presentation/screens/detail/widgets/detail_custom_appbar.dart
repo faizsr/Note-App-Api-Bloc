@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/bloc/note_bloc.dart';
 import 'package:note_app/core/colors.dart';
 
@@ -45,6 +46,7 @@ class DetailCustomAppbar extends StatelessWidget {
                   PopupMenuItem(
                     onTap: () {
                       noteBloc.add(NoteDeleteEvent(noteId: noteId));
+                      context.read<NoteBloc>().add(NoteInitialFetchEvent());
                       Navigator.pop(context);
                     },
                     height: 25,

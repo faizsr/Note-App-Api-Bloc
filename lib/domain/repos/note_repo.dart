@@ -18,7 +18,6 @@ class NoteRepo {
         final List items = responseData['items'];
         for (int i = 0; i < items.length; i++) {
           NoteModel note = NoteModel.fromJson(items[i] as Map<String, dynamic>);
-
           notes.add(note);
         }
       }
