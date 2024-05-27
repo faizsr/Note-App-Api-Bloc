@@ -22,7 +22,7 @@ class CustomAppbar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
-                  'Keep Note',
+                  'Quick Note',
                   style: TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.w700,
